@@ -24,6 +24,11 @@
     {{else}}
       {{i18n "chat_integration.all_tags"}}
     {{/if}}
+    {{#if rule.exclude_tags}}
+      {{rule.exclude_tags}}
+    {{else}}
+      {{i18n "chat_integration.all_tags"}}
+    {{/if}}
   </td>
 {{/if}}
 

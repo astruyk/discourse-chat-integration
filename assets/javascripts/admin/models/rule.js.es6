@@ -17,6 +17,7 @@ export default RestModel.extend({
 
   category_id: null,
   tags: null,
+  exclude_tags: null,
   channel_id: null,
   filter: 'watch',
   type: 'normal',
@@ -48,10 +49,10 @@ export default RestModel.extend({
   },
 
   updateProperties() {
-    return this.getProperties(['type','category_id','group_id','tags','filter']);
+    return this.getProperties(['type','category_id','group_id','tags','exclude_tags','filter']);
   },
 
   createProperties() {
-    return this.getProperties(['type','channel_id', 'category_id','group_id','tags','filter']);
+    return this.getProperties(['type','channel_id', 'category_id','group_id','tags','exclude_tags','filter']);
   }
 });

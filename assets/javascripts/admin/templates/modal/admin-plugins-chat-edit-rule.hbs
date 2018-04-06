@@ -87,6 +87,16 @@
             <td></td>
             <td><label>{{i18n 'chat_integration.edit_rule_modal.instructions.tags'}}</label></td>
           </tr>
+          <tr class="input">
+            <td class="label"><label for='exclude_tags'>{{i18n "chat_integration.edit_rule_modal.exclude_tags"}}</label></td>
+            <td>
+              {{tag-chooser placeholderKey="chat_integration.all_tags" name="exclude_tags" tags=model.rule.exclue_tags}}
+            </td>
+          </tr>
+          <tf class="instructions">
+            <td></td>
+            <td><label>{{i18n 'chat_integration.edit_rule_modal.instructions.exclude_tags'}}</label></td>
+          </tf>
         {{/if}}
 
       </table>

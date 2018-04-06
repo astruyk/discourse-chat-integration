@@ -1,6 +1,6 @@
 class DiscourseChat::Rule < DiscourseChat::PluginModel
   # Setup ActiveRecord::Store to use the JSON field to read/write these values
-  store :value, accessors: [ :channel_id, :type, :group_id, :category_id, :tags, :filter ], coder: JSON
+  store :value, accessors: [ :channel_id, :type, :group_id, :category_id, :tags, :exclude_tags, :filter ], coder: JSON
 
   scope :with_type, ->(type) { where("value::json->>'type'=?", type.to_s) }
   scope :with_channel, ->(channel) { with_channel_id(channel.id) }
@@ -43,7 +43,7 @@ class DiscourseChat::Rule < DiscourseChat::PluginModel
   validates :type, inclusion: { in: %w(normal group_message group_mention),
                                 message: "%{value} is not a valid filter" }
 
-  validate :channel_valid?, :category_valid?, :group_valid?, :tags_valid?
+  validate :channel_valid?, :category_valid?, :group_valid?, :tags_valid?, :exclude_tags_valid?
 
   def self.key_prefix
     'rule:'.freeze
@@ -51,6 +51,14 @@ class DiscourseChat::Rule < DiscourseChat::PluginModel
 
   # We never want an empty array, set it to nil instead
   def tags=(array)
+    if array.nil? || array.empty?
+      super(nil)
+    else
+      super(array)
+    end
+  end
+
+  def exclude_tags=(array)
     if array.nil? || array.empty?
       super(nil)
     else
@@ -117,6 +125,16 @@ class DiscourseChat::Rule < DiscourseChat::PluginModel
       tags.each do |tag|
         if !Tag.where(name: tag).exists?
           errors.add(:tags, "#{tag} is not a valid tag")
+        end
+      end
+    end
+
+    def exclude_tags_valid?
+      return if exclude_tags.nil?
+
+      exclude_tags.each do |tag|
+        if !Tag.where(name: tag).exists?
+          errors.add(:exclude_tags, "#{tag} is not a valid tag")
         end
       end
     end

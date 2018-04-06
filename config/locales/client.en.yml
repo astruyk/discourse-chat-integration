@@ -40,6 +40,7 @@ en:
         filter: "Filter"
         category: "Category"
         tags: "Tags"
+        exclude_tags: "Exclude Tags"
         edit_rule: "Edit"
         delete_rule: "Delete"
       edit_channel_modal:
@@ -61,12 +62,14 @@ en:
         category: Category
         group: Group
         tags: Tags
+        exclude_tags: Exclude Tags
         instructions:
           type: "Change the type to trigger notifications for group messages or mentions"
           filter: "Notification level. Mute overrides other matching rules"
           category: "This rule will only apply to topics in the specified category"
           group: "This rule will apply to posts referencing this group"
           tags: "If specified, this rule will only apply to topics which have at least one of these tags"
+          exclude_tags: "If specificed, this rule will exclude topics which have at least one of these tags"
 
       provider:
 

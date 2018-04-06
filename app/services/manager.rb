@@ -42,6 +42,9 @@ module DiscourseChat
       if SiteSetting.tagging_enabled
         topic_tags = topic.tags.present? ? topic.tags.pluck(:name) : []
         matching_rules = matching_rules.select do |rule|
+          if !rule.exclude_tags.nil? && !rule.tags.empty? #Filter has exlcude_tags specified
+            next false if (!(rule.tags & topic_tags).empty?) # There is a tag that is excluded
+          end
           next true if rule.tags.nil? || rule.tags.empty? # Filter has no tags specified
           any_tags_match = !((rule.tags & topic_tags).empty?)
           next any_tags_match # If any tags match, keep this filter, otherwise throw away
